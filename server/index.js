@@ -14,6 +14,9 @@ dotenv.config();
 
 const app = express();
 
+// Fix for reverse proxy (Railway) to get real IP for rate limiting
+app.set('trust proxy', 1);
+
 // --- Security & Performance Middleware ---
 
 // Set security HTTP headers
