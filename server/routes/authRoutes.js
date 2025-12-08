@@ -30,7 +30,6 @@ router.post('/register', asyncHandler(async (req, res) => {
       password: hashedPassword,
       phone,
       balance: 0.0, // Default is usually handled by DB, but explicit here
-      role: 'user',
       status: 'active'
     }
   });
@@ -40,7 +39,7 @@ router.post('/register', asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      balance: user.balance,
       token: generateToken(user.id),
     });
   } else {
@@ -68,7 +67,6 @@ router.post('/login', asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       balance: user.balance,
-      role: user.role,
       token: generateToken(user.id),
     });
   } else {
