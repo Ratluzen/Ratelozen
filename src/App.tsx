@@ -14,15 +14,15 @@ import {
   Transaction,
 } from '../types';
 
-import Home from './pages/Home';
-import SearchPage from './pages/Search';
-import Wallet from './pages/Wallet';
-import Profile from './pages/Profile';
-import Notifications from './pages/Notifications';
-import Admin from './pages/Admin';
+import Home from '../pages/Home';
+import SearchPage from '../pages/Search';
+import Wallet from '../pages/Wallet';
+import Profile from '../pages/Profile';
+import Notifications from '../pages/Notifications';
+import Admin from '../pages/Admin';
 
-import BottomNav from './components/BottomNav';
-import TopHeader from './components/TopHeader';
+import BottomNav from '../components/BottomNav';
+import TopHeader from '../components/TopHeader';
 import CheckoutModal from '../components/CheckoutModal';
 import ProductDetailsModal from '../components/ProductDetailsModal';
 import InvoiceModal from '../components/InvoiceModal';
@@ -51,7 +51,7 @@ import {
   INITIAL_CURRENCIES,
   INITIAL_TERMS,
   INITIAL_BANNERS,
-} from './constants';
+} from '../constants';
 
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
@@ -162,6 +162,8 @@ const App: React.FC = () => {
   // --- Auth State ---
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  // ✅ حل مشكلة بقاء واجهة تسجيل الدخول بعد النجاح
+  const isLoginModalOpen = showLoginModal && !currentUser;
 
   // --- Admin Auth State ---
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(() => {
@@ -827,7 +829,7 @@ const App: React.FC = () => {
       case View.CART:
         return (
           <div className="pt-4">
-            <div className="px-4 mb-4 flex items-center justify-between">
+            <div className="px-4 mb-4 flex items-center justify_between">
               <button onClick={() => handleSetView(View.HOME)}>
                 <ArrowLeft className="text-white" />
               </button>
@@ -838,7 +840,7 @@ const App: React.FC = () => {
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center pt-16 text-center px-6 animate-fadeIn">
                 <div className="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center mb-4 relative shadow-lg shadow-yellow-400/20">
-                  <ShoppingCart size={48} className="text-black" strokeWidth={1.5} />
+                  <ShoppingCart size={48} className="text_black" strokeWidth={1.5} />
                 </div>
                 <h2 className="text-xl font-bold mb-2 text-white">
                   قائمة مشترياتك فارغة
@@ -948,7 +950,7 @@ const App: React.FC = () => {
                         </button>
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="px-3 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center active:scale-95"
+                          className="px-3 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors flex items_center justify-center active:scale-95"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -991,7 +993,7 @@ const App: React.FC = () => {
             </div>
 
             {myOrders.length === 0 ? (
-              <div className="flex flex-col items-center justify-center pt-16 text-center px-6 animate-fadeIn">
+              <div className="flex flex-col items-center justify-center pt-16 text_center px-6 animate-fadeIn">
                 <div className="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center mb-4 text-black shadow-lg shadow-yellow-400/20">
                   <ShoppingBag size={48} strokeWidth={1.5} />
                 </div>
@@ -1277,7 +1279,7 @@ const App: React.FC = () => {
         )}
 
         <LoginModal
-          isOpen={showLoginModal}
+          isOpen={isLoginModalOpen}
           onClose={() => setShowLoginModal(false)}
           onLogin={handleLogin}
           terms={terms}
