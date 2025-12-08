@@ -111,7 +111,7 @@ const App: React.FC = () => {
              customInput: typeof p.customInput === 'string' ? JSON.parse(p.customInput) : p.customInput,
           }));
 
-          setProducts(parsedProducts.length > 0 ? parsedProducts : MOCK_PRODUCTS); // Fallback to mocks if DB empty
+          setProducts(parsedProducts);
           
           // Map backend categories to frontend structure (if needed)
           const mappedCats = catsRes.data.map((c: any) => ({
@@ -121,16 +121,16 @@ const App: React.FC = () => {
              // but let's keep MOCK_CATEGORIES as fallback/mix for icons
              icon: MOCK_CATEGORIES.find(mc => mc.name === c.name)?.icon || ShoppingBag
           }));
-          setCategories(mappedCats.length > 0 ? mappedCats : MOCK_CATEGORIES);
+          setCategories(mappedCats);
 
           setBanners(bansRes.data.length > 0 ? bansRes.data : INITIAL_BANNERS);
           setAnnouncements(annsRes.data);
 
       } catch (error) {
           console.error("Failed to fetch initial data", error);
-          // Fallback to mocks
-          setProducts(MOCK_PRODUCTS);
-          setCategories(MOCK_CATEGORIES);
+          // Fallback to empty arrays
+          setProducts([]);
+          setCategories([]);
       }
   };
 

@@ -19,7 +19,7 @@ export const PREDEFINED_REGIONS: Region[] = [
   { id: 'global', name: 'عالمي', flag: '🌍' },
 ];
 
-export const CATEGORIES: Category[] = [
+export const CATEGORIES: Category[] = [];
   { id: 'all', name: 'الجميع', icon: Grid },
   { id: 'stores', name: 'متاجر التطبيقات', icon: ShoppingBag },
   { id: 'games', name: 'ألعاب', icon: Gamepad2 },
@@ -28,7 +28,7 @@ export const CATEGORIES: Category[] = [
   { id: 'media', name: 'خدمات الميديا', icon: Share2 },
 ];
 
-export const PRODUCTS: Product[] = [
+export const PRODUCTS: Product[] = [];
   {
     id: '1',
     name: 'شحن شدات ببجي',
@@ -138,7 +138,7 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
-export const TRANSACTIONS: Transaction[] = [
+export const TRANSACTIONS: Transaction[] = [];
   { id: 'tx2', title: 'شحن محفظة (Visa)', date: '2025-10-09 | 04:20 م', amount: 50.00, type: 'credit', status: 'completed', icon: CreditCard },
 ];
 
@@ -190,7 +190,7 @@ export const INITIAL_BANNERS: Banner[] = [
   }
 ];
 
-export const MOCK_USERS: UserProfile[] = [
+export const MOCK_USERS: UserProfile[] = [];
   {
     id: '123456',
     name: 'Ratluzen',
@@ -225,13 +225,13 @@ export const MOCK_USERS: UserProfile[] = [
   }
 ];
 
-export const MOCK_ORDERS: Order[] = [
+export const MOCK_ORDERS: Order[] = [];
     { id: '#9001', userId: '123456', userName: 'Ratluzen', productName: 'شحن شدات ببجي (660 UC)', productCategory: 'games', amount: 9.99, date: '2025-10-10 10:30 AM', status: 'pending', fulfillmentType: 'manual', regionName: 'عالمي', quantityLabel: '660 UC' },
     { id: '#9002', userId: '999999', userName: 'Ahmed Ali', productName: 'بطاقة ايتونز 10$', productCategory: 'stores', amount: 10.00, date: '2025-10-10 09:15 AM', status: 'completed', deliveredCode: 'XJ99-1234-ABCD-5678', fulfillmentType: 'stock', regionName: 'أمريكي', quantityLabel: '10$' },
     { id: '#9003', userId: '999999', userName: 'Ahmed Ali', productName: 'رصيد سوا 20', productCategory: 'telecom', amount: 5.33, date: '2025-10-09 08:00 PM', status: 'cancelled', fulfillmentType: 'api', regionName: 'سعودي', quantityLabel: '20 ريال' },
 ];
 
-export const MOCK_INVENTORY: InventoryCode[] = [
+export const MOCK_INVENTORY: InventoryCode[] = [];
     { id: '1', productId: '2', regionId: 'us', denominationId: 'it10', code: 'XJ99-1111-AAAA-2222', isUsed: false, dateAdded: '2025-10-01' },
     { id: '2', productId: '2', regionId: 'us', denominationId: 'it10', code: 'XJ99-3333-BBBB-4444', isUsed: false, dateAdded: '2025-10-01' },
     { id: '3', productId: '2', regionId: 'sa', denominationId: 'it10', code: 'SA99-5555-CCCC-6666', isUsed: true, dateAdded: '2025-10-02' },
