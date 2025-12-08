@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  name        String
+  email       String   @unique
+  password    String
+  phone       String?
+  balance     Float    @default(0.0)
+  status      String   @default("active") // active, banned
+  ip          String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+  transactions Transaction[]
+}
+
+model Product {
+  id            String   @id @default(auto()) @map("_id") @db.Uuid
+  name          String
+  category      String
+  price         Float
+  tag           String?
+  imageColor    String?
+  imageUrl      String?
+  description   String?
+  regions       Json? // Array of Region objects
+  denominations Json? // Array of Denomination objects
+  apiConfig     Json? // { type: 'manual' | 'api', endpoint: string, ... }
+  autoDeliverStock Boolean @default(false)
+  customInput   Json? // { enabled: boolean, label: string, placeholder: string, required: boolean }
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  orders        Order[]
+  inventory     InventoryCode[]
+}
+
+model Order {
+  id                String   @id @default(auto()) @map("_id") @db.Uuid
+  userId            String   @db.Uuid
+  user              User     @relation(fields: [userId], references: [id])
+  productId         String?  @db.Uuid
+  product           Product? @relation(fields: [productId], references: [id])
+  productName       String
+  productCategory   String
+  price             Float
+  regionId          String?
+  regionName        String?
+  denominationId    String?
+  quantityLabel     String?
+  customInputValue  String?
+  customInputLabel  String?
+  status            String   @default("pending") // pending, completed, cancelled
+  deliveredCode     String?
+  rejectionReason   String?
+  fulfillmentType   String   @default("manual") // manual, api
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model InventoryCode {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  productId   String   @db.Uuid
+  product     Product  @relation(fields: [productId], references: [id])
+  code        String
+  isUsed      Boolean  @default(false)
+  regionId    String?
+  denominationId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  name        String
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Banner {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  title       String?
+  subtitle    String?
+  desc        String?
+  bg          String?
+  imageUrl    String?
+  pattern     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Announcement {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  title       String
+  message     String
+  type        String   @default("info") // info, alert, offer, ad
+  date        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AppTerms {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  lang        String   @unique
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Transaction {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  amount      Float
+  type        String   // credit, debit
+  status      String   @default("completed") // completed, pending, failed
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Setting {
+  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  key         String   @unique
+  value       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

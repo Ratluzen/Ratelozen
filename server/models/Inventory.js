@@ -1,0 +1,1 @@
+/* DEPRECATED: See prisma/schema.prisma */ module.exports = {};
