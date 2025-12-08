@@ -30,6 +30,8 @@ jobs:
         run: npm install
 
       - name: Build Web App
+        env:
+          VITE_API_URL: https://ratelozen-production.up.railway.app/api
         run: npm run build
 
       - name: Add/Sync Android Platform
