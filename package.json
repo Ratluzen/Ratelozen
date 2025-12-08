@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && VITE_API_URL=https://ratelozen-production.up.railway.app/api vite build",
     "clean": "rm -rf dist",
     "preview": "vite preview",
     "android:init": "cap add android",
