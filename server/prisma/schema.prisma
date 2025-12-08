@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   name        String
   email       String   @unique
   password    String
@@ -26,7 +26,7 @@ model User {
 }
 
 model Product {
-  id            String   @id @default(auto()) @map("_id") @db.Uuid
+  id            String   @id @default(uuid()) @map("_id") @db.Uuid
   name          String
   category      String
   price         Float
@@ -46,7 +46,7 @@ model Product {
 }
 
 model Order {
-  id                String   @id @default(auto()) @map("_id") @db.Uuid
+  id                String   @id @default(uuid()) @map("_id") @db.Uuid
   userId            String   @db.Uuid
   user              User     @relation(fields: [userId], references: [id])
   productId         String?  @db.Uuid
@@ -69,7 +69,7 @@ model Order {
 }
 
 model InventoryCode {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   productId   String   @db.Uuid
   product     Product  @relation(fields: [productId], references: [id])
   code        String
@@ -81,7 +81,7 @@ model InventoryCode {
 }
 
 model Category {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   name        String
   icon        String?
   createdAt   DateTime @default(now())
@@ -89,7 +89,7 @@ model Category {
 }
 
 model Banner {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   title       String?
   subtitle    String?
   desc        String?
@@ -101,7 +101,7 @@ model Banner {
 }
 
 model Announcement {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   title       String
   message     String
   type        String   @default("info") // info, alert, offer, ad
@@ -111,7 +111,7 @@ model Announcement {
 }
 
 model AppTerms {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   lang        String   @unique
   content     String
   createdAt   DateTime @default(now())
@@ -119,7 +119,7 @@ model AppTerms {
 }
 
 model Transaction {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   userId      String   @db.Uuid
   user        User     @relation(fields: [userId], references: [id])
   title       String
@@ -132,7 +132,7 @@ model Transaction {
 }
 
 model Setting {
-  id          String   @id @default(auto()) @map("_id") @db.Uuid
+  id          String   @id @default(uuid()) @map("_id") @db.Uuid
   key         String   @unique
   value       String
   createdAt   DateTime @default(now())
