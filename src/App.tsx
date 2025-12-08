@@ -12,7 +12,7 @@ import {
   Order,
   InventoryCode,
   Transaction,
-} from './types';
+} from '../types';
 
 import Home from './pages/Home';
 import SearchPage from './pages/Search';
@@ -23,10 +23,10 @@ import Admin from './pages/Admin';
 
 import BottomNav from './components/BottomNav';
 import TopHeader from './components/TopHeader';
-import CheckoutModal from './components/checkout-modal';
-import ProductDetailsModal from './components/product-details-modal';
-import InvoiceModal from './components/invoice-modal';
-import LoginModal from './components/login-modal';
+import CheckoutModal from '../components/CheckoutModal';
+import ProductDetailsModal from '../components/ProductDetailsModal';
+import InvoiceModal from '../components/InvoiceModal';
+import LoginModal from '../components/LoginModal';
 
 import {
   ShoppingBag,
