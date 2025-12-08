@@ -27,6 +27,7 @@ import CheckoutModal from './components/checkout-modal';
 import ProductDetailsModal from './components/product-details-modal';
 import InvoiceModal from './components/invoice-modal';
 import LoginModal from './components/login-modal';
+
 import {
   ShoppingBag,
   ShoppingCart,
