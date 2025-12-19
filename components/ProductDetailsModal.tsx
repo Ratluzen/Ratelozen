@@ -8,7 +8,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   formatPrice: (price: number) => string;
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: CartItem) => boolean;
   userBalance?: number; 
   onPurchase?: (itemName: string, price: number, fulfillmentType?: 'manual' | 'api', regionName?: string, quantityLabel?: string, category?: string, productId?: string, regionId?: string, denominationId?: string, customInputValue?: string, customInputLabel?: string, paymentMethod?: 'wallet' | 'card') => void;
   isLoggedIn?: boolean; // New prop
@@ -74,12 +74,6 @@ const ProductDetailsModal: React.FC<Props> = ({ product, isOpen, onClose, format
   const currentPrice = denomObj ? denomObj.price : product.price;
 
   const handleAddToCart = () => {
-    // Auth Check
-    if (!isLoggedIn) {
-        if (onRequireAuth) onRequireAuth();
-        return;
-    }
-
     if (product.denominations && product.denominations.length > 0 && !selectedDenomId) {
         alert("يرجى اختيار الكمية/الفئة السعرية أولاً");
         return;
@@ -107,7 +101,12 @@ const ProductDetailsModal: React.FC<Props> = ({ product, isOpen, onClose, format
         customInputLabel: activeCustomInput?.label
     };
 
-    addToCart(newItem);
+    const added = addToCart(newItem);
+    if (!added) {
+        if (onRequireAuth) onRequireAuth();
+        return;
+    }
+
     onClose();
     alert("تمت الإضافة إلى السلة بنجاح ✅");
   };
