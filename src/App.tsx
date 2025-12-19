@@ -40,6 +40,7 @@ const App: React.FC = () => {
   
   // --- Cart State ---
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [pendingCartItem, setPendingCartItem] = useState<CartItem | null>(null);
   const [activeCheckoutItem, setActiveCheckoutItem] = useState<CartItem | null>(null);
   const [isBulkCheckout, setIsBulkCheckout] = useState(false); 
 
@@ -207,6 +208,11 @@ const App: React.FC = () => {
         });
         
         setShowLoginModal(false);
+        if (pendingCartItem) {
+            setCartItems(prev => [...prev, pendingCartItem]);
+            setPendingCartItem(null);
+            alert('تمت إضافة المنتج إلى السلة');
+        }
         fetchUserOrders(); // Load their orders
 
     } catch (error: any) {
@@ -281,6 +287,7 @@ const App: React.FC = () => {
       localStorage.removeItem('token');
       setCurrentUser(null);
       setCartItems([]);
+      setPendingCartItem(null);
       setOrders([]);
       setCurrentView(View.HOME);
   };
@@ -363,12 +370,15 @@ const App: React.FC = () => {
   };
 
   // --- Cart Logic ---
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CartItem): boolean => {
     if (!currentUser) {
+        setPendingCartItem(item);
         setShowLoginModal(true);
-        return;
+        return false;
     }
     setCartItems(prev => [...prev, item]);
+    setPendingCartItem(null);
+    return true;
   };
 
   const removeFromCart = (itemId: string) => {

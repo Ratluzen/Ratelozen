@@ -39,6 +39,7 @@ const App: React.FC = () => {
   
   // --- Cart State ---
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [pendingCartItem, setPendingCartItem] = useState<CartItem | null>(null);
   const [activeCheckoutItem, setActiveCheckoutItem] = useState<CartItem | null>(null);
   const [isBulkCheckout, setIsBulkCheckout] = useState(false); // NEW: State for bulk checkout
 
@@ -130,6 +131,11 @@ const App: React.FC = () => {
         setUsers(prev => [...prev, newUser]);
         setCurrentUser(newUser);
         setShowLoginModal(false);
+        if (pendingCartItem) {
+            setCartItems(prev => [...prev, pendingCartItem]);
+            setPendingCartItem(null);
+            alert('تمت إضافة المنتج إلى السلة');
+        }
         alert('تم إنشاء الحساب بنجاح! مرحباً بك.');
 
     } else {
@@ -161,6 +167,11 @@ const App: React.FC = () => {
 
         setCurrentUser(existingUser);
         setShowLoginModal(false);
+        if (pendingCartItem) {
+            setCartItems(prev => [...prev, pendingCartItem]);
+            setPendingCartItem(null);
+            alert('تمت إضافة المنتج إلى السلة');
+        }
         // alert('تم تسجيل الدخول بنجاح'); // Optional toast
     }
   };
@@ -215,6 +226,7 @@ const App: React.FC = () => {
   // --- User Logout Logic ---
   const handleUserLogout = () => {
       setCurrentUser(null);
+      setPendingCartItem(null);
       setCurrentView(View.HOME);
   };
   
@@ -347,13 +359,16 @@ const App: React.FC = () => {
   };
 
   // --- Cart Logic ---
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CartItem): boolean => {
     if (!currentUser) {
+        setPendingCartItem(item);
         setShowLoginModal(true);
-        return;
+        return false;
     }
     setCartItems(prev => [...prev, item]);
+    setPendingCartItem(null);
     // Optional: Vibrate or show toast could be triggered here
+    return true;
   };
 
   const removeFromCart = (itemId: string) => {

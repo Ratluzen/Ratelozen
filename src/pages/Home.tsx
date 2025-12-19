@@ -11,7 +11,7 @@ interface Props {
   categories: Category[];
   banners: Banner[];
   announcements: Announcement[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: CartItem) => boolean;
   userBalance: number;
   onPurchase: (
     itemName: string, 
